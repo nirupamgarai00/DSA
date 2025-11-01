@@ -135,7 +135,7 @@ class Mylist:# creating a class for list
             return temp # return the pop item
         else: 
             # if empty
-            return ValueError("list is empty") # returing an error that list is empty
+            raise ValueError("list is empty") # returing an error that list is empty
     
     # push funtion    
     def push(self,var):
@@ -244,4 +244,5 @@ class Mylist:# creating a class for list
         
         
         
+
 
