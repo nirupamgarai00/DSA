@@ -10,7 +10,7 @@
 # delete [D]
 
 
-
+# a Node class for chaning
 class Node:
     def __init__(self,key,value):
         self.key = key
@@ -474,4 +474,5 @@ class Dict:
     
                  
     
+
         
