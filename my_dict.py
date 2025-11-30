@@ -1,7 +1,7 @@
 #https://github.com/nirupamgarai00/DSA.git
 
 # Hi, this my code to create my own Dictionary(its a haibrid Hastable of both chaning and probing) there will be mixed consept of DSA and OOPS in python
-# =======dynamic array==================
+# =======my Dictionary==================
 #len function [D]
 # append [D]
 # print[D]
@@ -476,3 +476,4 @@ class Dict:
     
 
         
+
