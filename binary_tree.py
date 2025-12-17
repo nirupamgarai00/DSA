@@ -5,12 +5,17 @@
 #len function [D]
 # insert[D]
 # delet [D]
-# Tree builder using pre ord list[D]
+# Tree builder using pre ord list[D] & also with preorder and inorder combaine[D]
 # cal - depth[D]
 # cal - level of given data[D]
 # traversal - pre ,post , in , level[D]
 # convert tree into - preorder,inorder,postorder list[D]
 # searching [D]
+
+
+
+
+
 
 
 
@@ -33,12 +38,13 @@ class Binary_tree:
     
     _SENTINEL = object()
     
-    def __init__(self,arr):
+    def __init__(self,arr,order:str='pre'):
         
         
         # a index for adding converthing the list into tree
         self.idx = -1
         self.n = 0# count the len
+        
         
         self.root = self.Build_preorder(arr)
     
@@ -304,8 +310,8 @@ class Binary_tree:
             return
         
         print(curr.data,end=' ')
-        self.traver_pre(curr.left)
-        self.traver_pre(curr.right)
+        self.travers_pre(curr.left)
+        self.travers_pre(curr.right)
         
         return
         
@@ -348,6 +354,8 @@ class Binary_tree:
     def Build_preorder(self,arr):
         # an itarator
         self.idx +=1
+        if self.idx>=len(arr):
+            return None
         # if value is -1 then return None
         if arr[self.idx] == -1:
             return None
@@ -361,8 +369,54 @@ class Binary_tree:
         new_node.right = self.Build_preorder(arr)
         
         return new_node # returning the root
-    
+    @classmethod
+    def _helper_for_treeBuilder(cls,pre,in_ord,inord_range:tuple):
+        Binary_tree.__idx += 1
+        # when idx>len(pre)
+        if Binary_tree.__idx>=len(pre):
+            return None
         
+        # creating new node
+        new_node = Node(pre[Binary_tree.__idx])
+        
+        if new_node.data in in_ord:
+            index_of_node_inord = in_ord[new_node.data]
+        else:
+            cls.__idx = -1
+            raise ValueError('inorder list invaild')
+        
+        
+        
+        # adding the left subtree
+        new_node.left = Binary_tree._helper_for_treeBuilder(pre,in_ord,(inord_range[0],index_of_node_inord))
+        # adding the right subtree
+        new_node.right = Binary_tree._helper_for_treeBuilder(pre,in_ord,(index_of_node_inord+1,inord_range[1]))
+        
+        # returning the node
+        return new_node
+        
+    __idx = -1 # using class level idx for traversing the pre ord list
+    @classmethod
+    def build_tree(cls,pre,in_ord=None):
+        # in case of one complet pre ord list
+        if in_ord is None:
+            temp = Binary_tree(pre)
+            return temp.root
+        
+        # when both pre and in order are given
+        else:
+            # constract the tree and returns the root
+            in_ord_map={}
+            for idx,val in enumerate(in_ord):
+                in_ord_map[val] = idx
+                
+            root = Binary_tree._helper_for_treeBuilder(pre,in_ord_map,(0,len(in_ord)))
+            Binary_tree.__idx = -1# setting the idx in the intial state
+            # returning the root
+            return root
+        
+        
+            
      
     # using Queue for the level order traversal    
     # level ord traversal
